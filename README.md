@@ -8,32 +8,17 @@
 A robust authentication system built with Spring Boot featuring JWT authentication, email verification, and role-based access control.
 
 ## Table of Contents
-- [Features](#features)
 - [System Architecture](#system-architecture)
 - [Core Components](#core-components)
 - [Key Features](#key-features)
 - [Workflows](#workflows)
-- [Installation](#installation)
+- [MailDev Installation](#installation)
 - [Configuration](#configuration)
 - [API Documentation](#api-documentation)
 - [Testing](#testing)
 - [Dependencies](#dependencies)
 - [License](#license)
 
-## Features
-✅ JWT Authentication - Secure stateless authentication
-
-✉️ Email Verification - Account activation via email
-
-🔐 Role-Based Access - Ready for USER/ADMIN roles
-
-📝 Validation - Robust request validation
-
-📚 API Documentation - Integrated Swagger UI
-
-🛡️ Security - Password encryption, account locking
-
-📈 Auditing - Automatic tracking of create/update times
 
 ## System Architecture
 Project
@@ -161,5 +146,7 @@ Project
 3. Client uses token for authenticated requests
 
 ## Installation
-
+1. open your intelij terminal
+2. npm i maildev
+3. maildev 
 
