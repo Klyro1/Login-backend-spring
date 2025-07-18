@@ -167,22 +167,22 @@ Project
 ## Usage Examples
 ### 1. Register a new user
 - **Request**:
-  POST /api/v1/auth/register
-  Content-Type: application/json
-  
-  {
-    "firstname": "John",
-    "lastname": "Doe",
-    "email": "john.doe@example.com",
-    "password": "securePassword123"
-  }
+  - POST /api/v1/auth/register
+    Content-Type: application/json
+    
+    {
+      "firstname": "John",
+      "lastname": "Doe",
+      "email": "john.doe@example.com",
+      "password": "securePassword123"
+    }
 
 - **Response**:
-  HTTP/1.1 202 Accepted
+  - HTTP/1.1 202 Accepted
   
 ### 2. Authenticate (Login)
 - **Request**:
-    POST /api/v1/auth/authenticate
+  - POST /api/v1/auth/authenticate
   Content-Type: application/json
   
   {
@@ -191,9 +191,9 @@ Project
   }
 
 - **Response**:
-  {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-  }
+  - {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    }
 
 ### 3. Activate Account
 - **Request**:
@@ -217,20 +217,20 @@ The system automatically creates these tables:
 ## Configuration
 ### application.properties 
 - **Database configuration**
-- spring.datasource.url=jdbc:mysql://localhost:3306/Project?&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-- spring.datasource.username=root
-- spring.datasource.password=
+  - spring.datasource.url=jdbc:mysql://localhost:3306/Project?&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+  - spring.datasource.username=root
+  - spring.datasource.password=
 - **JWT**
-- application.security.jwt.secret-key=1fd8e1606256f52b0860dac2adcc08631fd8e1606256f52b0860dac2adcc0863
-- application.security.jwt.expiration=3600000
+  - application.security.jwt.secret-key=1fd8e1606256f52b0860dac2adcc08631fd8e1606256f52b0860dac2adcc0863
+  - application.security.jwt.expiration=3600000
 - **Email**
-- spring.mail.host=localhost
-- spring.mail.port=1025
-- spring.mail.username=admin
-- spring.mail.password=admin
-- spring.mail.properties.mail.smtp.trust=*
-- spring.mail.properties.mail.smtp.auth=true
-- spring.mail.properties.mail.smtp.starttls.enabled=true
+  - spring.mail.host=localhost
+  - spring.mail.port=1025
+  - spring.mail.username=admin
+  - spring.mail.password=admin
+  - spring.mail.properties.mail.smtp.trust=*
+  - spring.mail.properties.mail.smtp.auth=true
+  - spring.mail.properties.mail.smtp.starttls.enabled=true
 
 ## Testing
 ### Recommended test cases:
