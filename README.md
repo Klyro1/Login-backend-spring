@@ -197,10 +197,10 @@ Project
 
 ### 3. Activate Account
 - **Request**:
-  GET /api/v1/auth/activate-account?token=123456
+  - GET /api/v1/auth/activate-account?token=123456
 
 - **Response**:
-  HTTP/1.1 202 Accepted
+  - HTTP/1.1 202 Accepted
 
 ## Installation
 1. open your intelij terminal
@@ -237,9 +237,9 @@ The system automatically creates these tables:
 1. Registration with valid/invalid data
 2. Email verification flow
 3. Login scenarios:
-  - Correct credentials
-  - Incorrect credentials
-  - Disabled/locked accounts
+    - Correct credentials
+    - Incorrect credentials
+    - Disabled/locked accounts
 4. Protected endpoint access
 **For email testing in development, use MailHog.**
 
