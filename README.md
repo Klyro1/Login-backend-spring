@@ -12,9 +12,10 @@ A robust authentication system built with Spring Boot featuring JWT authenticati
 - [Core Components](#core-components)
 - [Key Features](#key-features)
 - [Workflows](#workflows)
+- [Usage Examples](#usageexamples)
 - [MailDev Installation](#installation)
+- [Database Schema](#database)
 - [Configuration](#configuration)
-- [API Documentation](#api-documentation)
 - [Testing](#testing)
 - [Dependencies](#dependencies)
 - [License](#license)
@@ -40,19 +41,23 @@ Project
 ## Core Components
 
 ### 1. User Management
-- **User Entity**: Implements Spring Security interfaces with:
-  - Personal details (name, email, password)
-  - Role relationships
-  - Account status fields
+- **User Entity**: Implements Spring Security interfaces 
+  - Implements UserDetails and Principal for Spring Security integration
+  - Contains user details (firstname, lastname, email, password, etc.)
+  - Many-to-many relationship with Role entity
+  - Includes auditing fields (createdDate, lastModifiedDate)
+  - Implements Spring Security's required methods (getAuthorities(), isAccountNonLocked(), etc.)
   - Automatic auditing (created/modified timestamps)
   
-- **Token Entity**: Manages email verification tokens with:
-  - Token strings
-  - Expiration timestamps
-  - User relationships
+- **Token Entity**: Manages email verification tokens
+  - Stores activation tokens for email verification
+  - Contains token string, creation/expiration dates
+  - Many-to-one relationship with User
 
 - **Repositories**:
-  - Custom queries for email and token lookup
+  - UserRepository: Basic CRUD + custom findByEmail() method
+  - TokenRepository: Basic CRUD + custom findByToken() method
+  - RoleRepository: Basic CRUD + custom findByName() method
 
 ### 2. Role Management
 - **Role Entity**: Defines application roles with:
@@ -61,25 +66,35 @@ Project
   - Automatic auditing
 
 ### 3. Security Components
-- **JWT Service**: Handles token generation/validation
-- **JWT Filter**: Validates tokens on each request
-- **Security Config**: Defines protected/public endpoints
-- **UserDetails Service**: Loads user credentials
+- **JWT Service**: 
+  - Generates and validates JWT tokens
+  - Extracts claims from tokens
+  - Uses HS256 algorithm with secret key from configuration
+- **JWT Filter**: 
+  - Validates tokens on each request
+  - Sets authentication in SecurityContext if token is valid
+  - Skips authentication for public endpoints
+- **Security Config**:
+  - Defines protected/public endpoints
+  - Sets up JWT filter chain
+- **UserDetails Service**:
+  - Loads user details by email for authentication 
 
 ### 4. Authentication Flow
-- **Controller**: REST endpoints for:
-  - Registration
-  - Login
-  - Account activation
-- **Service**: Core business logic for:
-  - User registration
-  - Credential validation
-  - Email verification
+- **Controller**: 
+  - /register: Handles user registration
+  - /authenticate: Handles login (returns JWT)
+  - /activate-account: Handles email verification
+- **Service**: 
+  - Core logic for registration, login, and activation
+  - Generates activation tokens
+  - Sends verification emails
+  - Uses AuthenticationManager for credential validation
 
 ### 5. Email Service
-- Sends HTML emails asynchronously
-- Supports template-based emails
-- Configurable through properties
+- Sends HTML emails using Thymeleaf templates
+- Supports async sending with @Async
+- Configurable templates via EmailTemplateName
 
 ### 6. Configuration
 - **Beans Config**: Sets up:
@@ -93,11 +108,19 @@ Project
   - Frontend URLs
 
 ### 7. Error Handling
-- Global exception handler for:
-  - Authentication failures
+- **Global Exception Handler**: Handles common exceptions:
+  - Locked/disabled accounts
+  - Bad credentials
   - Validation errors
-  - System exceptions
-- Standardized error codes and messages
+  - Messaging exceptions
+- **Business Error Codes**:
+  - Standardized error codes and messages
+- **Example error response:**:
+    {
+      "businessErrorCode": 304,
+      "businessErrorDescription": "Login and / or Password is incorrect",
+      "error": "Bad credentials"
+    }
 
 ## Key Features
 
@@ -120,10 +143,6 @@ Project
   - Password complexity requirements
   - Custom error messages
 
-- **API Documentation**:
-  - Integrated Swagger UI
-  - Automatic endpoint documentation
-
 ## Workflows
 
 ### Registration Flow
@@ -145,8 +164,102 @@ Project
    - Returns token to client
 3. Client uses token for authenticated requests
 
+## Usage Examples
+### 1. Register a new user
+- **Request**:
+  POST /api/v1/auth/register
+  Content-Type: application/json
+  
+  {
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "password": "securePassword123"
+  }
+
+- **Response**:
+  HTTP/1.1 202 Accepted
+  
+### 2. Authenticate (Login)
+- **Request**:
+    POST /api/v1/auth/authenticate
+  Content-Type: application/json
+  
+  {
+    "email": "john.doe@example.com",
+    "password": "securePassword123"
+  }
+
+- **Response**:
+  {
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+
+### 2. Activate Account
+- **Request**:
+  GET /api/v1/auth/activate-account?token=123456
+
+- **Response**:
+  HTTP/1.1 202 Accepted
+
 ## Installation
 1. open your intelij terminal
 2. npm i maildev
 3. maildev 
 
+## Database Schema
+The system automatically creates these tables:
+- **user**: Stores user information
+- **role**: Contains application roles
+- **token**: Manages account activation tokens
+- **user_roles**: Join table for user-role relationship
+
+## Configuration
+
+### application.properties 
+# Database configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/Project?&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=
+# JWT
+application.security.jwt.secret-key=1fd8e1606256f52b0860dac2adcc08631fd8e1606256f52b0860dac2adcc0863
+application.security.jwt.expiration=3600000
+# Email
+spring.mail.host=localhost
+spring.mail.port=1025
+spring.mail.username=admin
+spring.mail.password=admin
+spring.mail.properties.mail.smtp.trust=*
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enabled=true
+
+## Testing
+### Recommended test cases:
+1. Registration with valid/invalid data
+2. Email verification flow
+3. Login scenarios:
+  - Correct credentials
+  - Incorrect credentials
+  - Disabled/locked accounts
+4. Protected endpoint access
+**For email testing in development, use MailHog.**
+
+## Dependencies
+- Spring Boot 3.x
+- Spring Security
+- Spring Data JPA
+- JJWT (JWT library)
+- Lombok
+- Thymeleaf (email templates)
+- Swagger (API docs)
+
+## License
+**This README provides:*
+1. Clear structure with table of contents
+2. Visual badges for key technologies
+3. Detailed component explanations
+4. Visual architecture overview
+5. Step-by-step workflows
+6. Practical configuration examples
+7. Testing recommendations
+8. Dependency information
