@@ -145,7 +145,7 @@ Project
 
 ## Workflows
 
-### Registration Flow
+### 1. Registration Flow
 1. User submits registration form
 2. System:
    - Encodes password
@@ -156,7 +156,7 @@ Project
 3. User clicks activation link
 4. System validates token and enables account
 
-### Login Flow
+### 2. Login Flow
 1. User submits credentials
 2. System:
    - Validates credentials
@@ -216,14 +216,14 @@ The system automatically creates these tables:
 
 ## Configuration
 ### application.properties 
-  **Database configuration**
+- **Database configuration**
 -spring.datasource.url=jdbc:mysql://localhost:3306/Project?&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
 -spring.datasource.username=root
 -spring.datasource.password=
-  **JWT**
+- **JWT**
 -application.security.jwt.secret-key=1fd8e1606256f52b0860dac2adcc08631fd8e1606256f52b0860dac2adcc0863
 -application.security.jwt.expiration=3600000
-  **Email**
+- **Email**
 -spring.mail.host=localhost
 -spring.mail.port=1025
 -spring.mail.username=admin
