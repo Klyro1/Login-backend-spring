@@ -8,6 +8,7 @@
 A robust authentication system built with Spring Boot featuring JWT authentication, email verification, and role-based access control.
 
 ## Table of Contents
+- [Features](#features)
 - [System Architecture](#system-architecture)
 - [Core Components](#core-components)
 - [Key Features](#key-features)
@@ -18,6 +19,15 @@ A robust authentication system built with Spring Boot featuring JWT authenticati
 - [Testing](#testing)
 - [Dependencies](#dependencies)
 - [License](#license)
+
+## Features
+✅ JWT Authentication - Secure stateless authentication
+✉️ Email Verification - Account activation via email
+🔐 Role-Based Access - Ready for USER/ADMIN roles
+📝 Validation - Robust request validation
+📚 API Documentation - Integrated Swagger UI
+🛡️ Security - Password encryption, account locking
+📈 Auditing - Automatic tracking of create/update times
 
 ## System Architecture
 Project
@@ -146,7 +156,4 @@ Project
 
 ## Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/spring-boot-auth.git
-   cd spring-boot-auth
+
