@@ -215,7 +215,6 @@ The system automatically creates these tables:
 - **user_roles**: Join table for user-role relationship
 
 ## Configuration
-
 ### application.properties 
 # Database configuration
 spring.datasource.url=jdbc:mysql://localhost:3306/Project?&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
@@ -254,7 +253,7 @@ spring.mail.properties.mail.smtp.starttls.enabled=true
 - Swagger (API docs)
 
 ## License
-**This README provides:*
+*This README provides:*
 1. Clear structure with table of contents
 2. Visual badges for key technologies
 3. Detailed component explanations
