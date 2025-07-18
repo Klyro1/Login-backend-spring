@@ -21,13 +21,13 @@ A robust authentication system built with Spring Boot featuring JWT authenticati
 
 ## System Architecture
 Project
-├── auth/ # Authentication endpoints and services
-├── config/ # Application configuration
-├── email/ # Email services and templates
-├── handler/ # Exception handling
-├── role/ # Role management
-├── security/ # JWT and security configuration
-└── user/ # User and token management
+├── auth/               # Authentication endpoints
+├── config/             # Application configuration
+├── email/              # Email services
+├── handler/            # Exception handling
+├── role/               # Role management
+├── security/           # JWT and security config
+└── user/               # User and token management
 
 ## Core Components
 
