@@ -6,6 +6,7 @@
 ![Database](https://img.shields.io/badge/Database-MySQL-lightgrey)
 
 A robust authentication system built with Spring Boot featuring JWT authentication, email verification, and role-based access control.
+
 How To download and run the project on your local pc : https://youtu.be/ijW6PC4EU4w?si=zRRU3v1bh9wsUr6c
 
 ## Table of Contents
